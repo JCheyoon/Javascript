@@ -74,3 +74,20 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+//Slice
+let arr =['a','b','c','d','e']
+console.log(arr.slice(2)) // ['c','d','e']
+console.log(arr.slice(2,4)) // ['c','d']
+console.log(arr.slice(-2)) // ['d','e']
+console.log(arr.slice(1,-2)) // ['b','c']
+
+//splice ->오리지널 어레이를 바꿔버림
+console.log(arr.splice(2)) // ['c','d','e']
+console.log(arr)//['a','b']
+
+//reverse ->오리지널 어레이를 바꿔버림
+arr = ['a','b','c','d','e']
+const arr2 = ['j','i','h','g','f']
+console.log(arr2.reverse()) //['f', 'g', 'h', 'i', 'j']
+
+//concat

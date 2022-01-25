@@ -1,4 +1,91 @@
 'use strict';
+/*This is more of a thinking challenge than a coding challenge �
+Your tasks:
+1. Take the IIFE below and at the end of the function, attach an event listener that
+changes the color of the selected h1 element ('header') to blue, each time
+the body element is clicked. Do not select the h1 element again!
+2. And now explain to yourself (or someone around you) why this worked! Take all
+the time you need. Think about when exactly the callback function is executed,
+and what that means for the variables involved in this example.
+
+GOOD LUCK �*/
+
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+
+  document.addEventListener("click",function (){
+    header.style.color = 'blue'
+  } )
+
+})();
+//--------
+// let f;
+//
+// const  g =function (){
+//   const a =23
+//   f= function (){
+//     console.log( a *2 )
+//   }
+// }
+//
+// const h = function (){
+//   const b =777;
+//   f = function (){
+//     console.log(b*2)}
+// }
+// g();
+// f()
+// console.dir(f)
+// // re-assigning f funcion
+//
+// h()
+// f()
+// console.dir(f)
+//
+// //EX2
+// const boardPassengers = function (n,wait){
+//   const perGroup = n/3
+//
+//   setTimeout(function (){
+//     console.log(`we are now boarding all ${n} passengers`)
+//     console.log(`there are 3 groups, each with ${perGroup}passengers`)
+//   },1000)
+//
+//   console.log(`will start boarding in ${wait} seconds`)
+// }
+//
+// boardPassengers(180,3)
+//-------------------------
+// //Closures :자신이 선언될 당시의 환경을 기억하는 함수
+// const secureBooking = function (){
+//   let passengerCount = 0;
+//
+//   return function (){ //클로저 함수
+//     passengerCount++;
+//     console.log(`${passengerCount} passengers`)
+//   }
+// }
+//
+// const booker = secureBooking(); //외부함수 호출은 한번만. 이제 booker 변수는 secureBooking 함수를 참조한다
+//
+// booker();
+// booker()
+// booker()
+
+//--------------------------------------------
+// const runOnce =function (){
+//   console.log('This will never run again')
+// }
+// runOnce();
+//
+// //IIFE
+// (function(){
+//   console.log('This wil never run again')
+// })();
+//
+// (() => {console.log('This will Also never run again')})()
+//--------------------------
 /*
 Coding Challenge #1
 Let's build a simple poll app!
@@ -47,7 +134,7 @@ Test data for bonus:
 Hints: Use many of the tools you learned about in this and the last section �
 GOOD LUCK �
 */
-
+/*
 const poll = {
   question: 'What is your favourite programming language?',
   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
@@ -123,7 +210,7 @@ document
 poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
-
+*/
 // [5, 2, 3]
 // [1, 5, 3, 9, 6, 1]
 //-
