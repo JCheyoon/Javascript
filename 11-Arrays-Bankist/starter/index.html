@@ -27,10 +27,11 @@
         />
         <!-- In practice, use type="password" -->
         <input
-          type="text"
+          type="password"
           placeholder="PIN"
           maxlength="4"
           class="login__input login__input--pin"
+          autocomplete="off"
         />
         <button class="login__btn">&rarr;</button>
       </form>
@@ -105,6 +106,7 @@
           <input
             type="password"
             maxlength="6"
+            autocomplete="off"
             class="form__input form__input--pin"
           />
           <button class="form__btn form__btn--close">&rarr;</button>
