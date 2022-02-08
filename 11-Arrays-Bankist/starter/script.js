@@ -61,10 +61,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovement = function (movements) {
+const displayMovement = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
         <div class="movements__row">
@@ -112,77 +114,96 @@ const createUsernames = function (accs) {
 
 createUsernames(accounts);
 
-const updateUI = function (acc){
+const updateUI = function (acc) {
   //display movement
-  displayMovement(currentAcc.movements)
+  displayMovement(currentAcc.movements);
   //display balance
-  calcDisplayBalance(currentAcc)
+  calcDisplayBalance(currentAcc);
   //display summary
-  calcDisplaySummary(currentAcc)
-}
+  calcDisplaySummary(currentAcc);
+};
 
 //Event Handler
-let currentAcc
+let currentAcc;
 
-btnLogin.addEventListener('click',function (e){
+btnLogin.addEventListener('click', function (e) {
   //prevent form from submitting ->버튼 클릭이 form으로 만들어졌는데 디폴트값이 값이 입력되면 페이지를 리로드하는거, 그래서 그걸 없에주기위해 preventDefault
-  e.preventDefault()
+  e.preventDefault();
 
-  currentAcc = accounts.find((acc) => acc.username === inputLoginUsername.value)
-  console.log(currentAcc)
-  if(currentAcc?.pin === Number(inputLoginPin.value)){
+  currentAcc = accounts.find(acc => acc.username === inputLoginUsername.value);
+  console.log(currentAcc);
+  if (currentAcc?.pin === Number(inputLoginPin.value)) {
     //display UI & welcome message
-    labelWelcome.textContent =`Welcome back, ${currentAcc.owner.split(' ')[0]}`
-    containerApp.style.opacity = '1'
+    labelWelcome.textContent = `Welcome back, ${
+      currentAcc.owner.split(' ')[0]
+    }`;
+    containerApp.style.opacity = '1';
     //clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     // inputLoginPin.blur();
-    updateUI(currentAcc)
-  }
-})
-
-btnTransfer.addEventListener('click',function (e){
-  e.preventDefault();
-  const amount = Number(inputTransferAmount.value)
-  const receiverAcc = accounts.find(acc => acc.username ===inputTransferTo.value)
-  inputTransferAmount.value = inputTransferTo.value = '';
-
-  if(amount > 0 && receiverAcc &&
-    currentAcc.balance >= amount && receiverAcc.username !== currentAcc){
-    currentAcc.movements.push(-amount);
-    receiverAcc.movements.push(amount)
-
-    //update UI
-    updateUI(currentAcc)
+    updateUI(currentAcc);
   }
 });
-btnLoan.addEventListener('click',function (e){
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  inputTransferAmount.value = inputTransferTo.value = '';
+
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAcc.balance >= amount &&
+    receiverAcc.username !== currentAcc
+  ) {
+    currentAcc.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    //update UI
+    updateUI(currentAcc);
+  }
+});
+btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
   const amount = Number(inputLoanAmount.value);
 
-  if(amount>0 && currentAcc.movements.some(mov => mov >= amount*0.1)){
-   //add movement
-   currentAcc.movements.push(amount)
-   //update ui
-    updateUI(currentAcc)
+  if (amount > 0 && currentAcc.movements.some(mov => mov >= amount * 0.1)) {
+    //add movement
+    currentAcc.movements.push(amount);
+    //update ui
+    updateUI(currentAcc);
   }
-  inputLoanAmount.value = ''
+  inputLoanAmount.value = '';
 });
 
-btnClose.addEventListener('click',function (e){
-  e.preventDefault()
-  if (inputCloseUsername.value === currentAcc.username && Number(inputClosePin.value) === currentAcc.pin){
-    const index = accounts.findIndex(acc => acc.username === currentAcc.username)
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentAcc.username &&
+    Number(inputClosePin.value) === currentAcc.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAcc.username
+    );
     //findIndex,find can get access current index, current entire array
     //delete account
     accounts.splice(index, 1);
     //hide Ui
     containerApp.style.opacity = 0;
   }
-  inputCloseUsername.value = inputClosePin.value='';
-
-})
+  inputCloseUsername.value = inputClosePin.value = '';
+});
+let sorted = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log('hi');
+  displayMovement(currentAcc.movements, !sorted);
+  sorted = !sorted;
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -362,6 +383,7 @@ const account = accounts.find(acc=>acc.owner ==='Jessica Davis')
 console.log(account)//{owner: 'Jessica Davis', movements: Array(8), interestRate: 1.5, pin: 2222, username: 'jd'}
 */
 
+/*
 //some & every
 console.log(movements);
 
@@ -382,3 +404,79 @@ const deposit = mov => mov >0
 console.log(movements.some(deposit))
 console.log(movements.every(deposit))
 console.log(movements.filter(deposit))
+
+
+const arrDeep = [[[1,2],3],[4,[5,6]],7,8]
+console.log(arrDeep.flat())
+// - 활용해보기 -
+
+//flat
+const overallBalance = accounts
+  .map(acc=> acc.movements)
+  .flat()
+  .reduce((acc,mov) => acc + mov, 0)
+console.log(overallBalance) // 17840
+
+//flatmap
+const overallBalance2 = accounts
+  .flatMap(acc=> acc.movements)
+  .reduce((acc,mov) => acc + mov, 0)
+console.log(overallBalance)
+
+//~Sort~
+//strings
+const owners = ['jonas', 'peti', 'cheyun', 'spider'];
+console.log(owners.sort()); // ['cheyun', 'jonas', 'peti', 'spider']
+
+//Numbers
+console.log(movements); // [200, 450, -400, 3000, -650, -130, 70, 1300]
+console.log(movements.sort()); //[-130, -400, -650, 1300, 200, 3000, 450, 70] -> string 으로  sort 한다
+
+//return < 0 , A,B (keep order)
+//return >0 , B,A (switch order)
+
+//Ascending order 오름차순 만들기
+movements.sort((a, b) => {
+  if (a > b) {
+    return -1;
+  }
+  if (a < b) {
+    return 1;
+  }
+});
+console.log(movements);
+//ascending
+movements.sort((a, b) => a - b);
+console.log(movements);
+//descending
+movements.sort((a, b) => b - a);
+
+ */
+
+//fill method : mutate 함
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+const x = new Array(7);
+console.log(x); // empty array
+
+// x.fill(1);
+console.log(x); // [1,1,1,1,1,1,1]
+x.fill(1, 3); //[empty x3,1,1,1,1]
+x.fill(1, 3, 5); //[empty x3,1,1,empty x2]
+
+arr.fill(23, 2, 6); // [1,2,23,23,23,23,7] ->  원래 어레이에 mutate 한다.
+
+//Array.from
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y); // [1,1,1,1,1,1,1]
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'), //queryselectorall ->node list, can turn to array
+    el => Number(el.textContent.replace('€', '')) // -> from function automatically make map function. element 의 textcontent.
+  );
+  console.log(movementsUI);
+});
