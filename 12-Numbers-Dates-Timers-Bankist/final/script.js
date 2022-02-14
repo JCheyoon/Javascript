@@ -369,7 +369,7 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
-/*
+
 ///////////////////////////////////////
 // Converting and Checking Numbers
 console.log(23 === 23.0);
@@ -606,4 +606,4 @@ setInterval(function () {
   const now = new Date();
   console.log(now);
 }, 1000);
-*/
+
