@@ -81,6 +81,8 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // Functions
 
+
+
 const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -151,6 +153,8 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+
+
 ///////////////////////////////////////
 // Event handlers
 let currentAccount;
@@ -179,6 +183,21 @@ btnLogin.addEventListener('click', function (e) {
     updateUI(currentAccount);
   }
 });
+
+// FAKE ALWAYS LOGGED IN
+currentAccount = account1
+updateUI(currentAccount)
+containerApp.style.opacity = 1
+
+// Create current date and time
+const now = new Date();
+const options = {
+  hour: 'numeric',
+  minute: 'numeric',
+  day: 'numeric',
+  month: 'numeric',
+  year: 'numeric',
+};
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
@@ -251,6 +270,8 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+
 /*
 //converting and checking number
 
@@ -283,7 +304,6 @@ console.log(5 % 2);
 
 console.log(Number.MAX_SAFE_INTEGER)
 console.log(4838430248342043823408394839483204n)
- */
 
 // Create a date
 
@@ -298,3 +318,22 @@ console.log(future.getMinutes());
 console.log(future.getSeconds());
 console.log(future.toISOString());
 console.log(future.getTime());
+
+const ingredients = ['olives','salami']
+const pizzatimer =setTimeout(
+  (ing1,ing2)=> console.log(`Here is your pizza with ${ing1} and ${ing2} `),
+  3000,
+  ...ingredients)
+
+console.log('waiting...')
+
+if(ingredients.includes('olives')) clearTimeout(pizzatimer)
+
+//setInterval
+setInterval(() => {
+  const now = new Date()
+  console.log(now)
+},1000)
+
+
+ */
