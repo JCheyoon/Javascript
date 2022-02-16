@@ -43,14 +43,43 @@ scrollTo.addEventListener('click',() => {
 })
 
 //page navigation
-document.querySelectorAll('.nav__link').forEach((el) => {
-  el.addEventListener('click',function (e) {
-    e.preventDefault()
-    const id = this.getAttribute('href')
-    document.querySelector(id).scrollIntoView({behavior: "smooth"})
-  })
-})
+// document.querySelectorAll('.nav__link').forEach((el) => {
+//   el.addEventListener('click',function (e) {
+//     e.preventDefault()
+//     const id = this.getAttribute('href')
+//     document.querySelector(id).scrollIntoView({behavior: "smooth"})
+//   })
+// })
 
+//1.add event listener to common parent element
+//2.determine what element originated the event
+document.querySelector('.nav__links').addEventListener('click',function (e){
+  e.preventDefault()
+
+  if(e.target.classList.contains('nav__link')){
+    const id = e.target.getAttribute('href')
+    document.querySelector(id).scrollIntoView({behavior: "smooth"})
+}
+})
+//operation tap
+const tabs = document.querySelectorAll('.operations__tab')
+const tabContainer = document.querySelector('.operations__tab-container')
+const tabContent = document.querySelectorAll('.operations__content')
+
+tabContainer.addEventListener('click',function (e){
+  const clicked = e.target.closest('.operations__tab')
+  //Guard clause :사전 조건이 거짓이라면 ( 다음 단계로 진행하기 위한 올바른 실행 조건이 아니라면 ) 예외처리를 하여 더이상 다음 단계가 실행되지 않도록 하는것입니다.= early return
+  if(!clicked) return
+
+  //remove tab
+  tabs.forEach(t=>t.classList.remove('operations__tab--active'))
+  tabContent.forEach(c=>c.classList.remove('operations__content--active'))
+//active tab
+  clicked.classList.add('operations__tab--active')
+
+  //active content area
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
+})
 //----------------------------------------------
 /*
 // Selecting, Creating, and Deleting Elements
@@ -113,5 +142,23 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 document.querySelector('.nav').addEventListener('click', function (e) {
 });
+
+
+// DOM Traversing
+const h1 = document.querySelector('h1');
+
+// Going downwards: child
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes);
+console.log(h1.children);
+h1.firstElementChild.style.color = 'white';
+
+// Going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+h1.closest('h1').style.background = 'var(--gradient-primary)';
 
  */
