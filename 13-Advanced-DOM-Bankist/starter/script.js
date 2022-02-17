@@ -80,6 +80,7 @@ tabContainer.addEventListener('click',function (e){
   //active content area
   document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active')
 })
+//made fade
 //----------------------------------------------
 /*
 // Selecting, Creating, and Deleting Elements
