@@ -101,7 +101,7 @@ class App {
     // const latitude = position.coords.latitude
     const { latitude } = position.coords;
     const { longitude } = position.coords;
-    console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+    // console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
     const coords = [latitude, longitude];
 
@@ -114,6 +114,10 @@ class App {
 
     //Handling clicks on map
     this.#map.on('click', this._showForm.bind(this));
+
+    this.#workouts.forEach(work => {
+      this._renderWorkoutMarker(work);
+    });
   }
   _showForm(mapE) {
     this.#mapEvent = mapE;
@@ -178,7 +182,7 @@ class App {
     }
     //add new object to new array
     this.#workouts.push(workout);
-    console.log(workout);
+    // console.log(workout);
 
     //Render workout on map as a marker
 
@@ -270,18 +274,27 @@ class App {
       },
     });
     //using public interface
-    workout.click();
+    // workout.click();
   }
   _setLocalStorage() {
     localStorage.setItem('workouts', JSON.stringify(this.#workouts));
   }
   _getLocalStorage() {
     const data = JSON.parse(localStorage.getItem('workouts'));
-    console.log(data);
+    // console.log(data);
     if (!data) return;
 
     this.#workouts = data;
+
+    this.#workouts.forEach(work => {
+      this._renderWorkout(work);
+    });
   }
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
+  }
+  //콘솔에 map.reset()하면 로컬스토리지에 저장된게 사라짐
 }
 
 const app = new App();
