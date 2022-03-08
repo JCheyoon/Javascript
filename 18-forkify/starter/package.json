@@ -1,0 +1,21 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe application",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "bulid": "parcel bulid index.html"
+  },
+  "author": "cheyun",
+  "license": "ISC",
+  "dependencies": {
+    "core-js": "^3.21.1",
+    "parcel": "^2.3.2",
+    "prettier": "^2.5.1",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.3.2"
+  }
+}
