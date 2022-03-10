@@ -30,5 +30,15 @@ const init = function () {
 };
 
 init();
+
+const controlSearchResults = async function () {
+  try {
+    await model.loadSearchResults('pizza');
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+controlSearchResults();
 // window.addEventListener('hashchange', showRecipe);
 // window.addEventListener('load', showRecipe);
