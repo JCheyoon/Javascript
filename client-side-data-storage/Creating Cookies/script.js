@@ -1,4 +1,5 @@
 
+/*
 window.onload = function() {
 
   // Key Value
@@ -16,4 +17,8 @@ window.onload = function() {
   // Create Cookie
   document.cookie = cookie;
 
-};
+};*/
+
+const cookieList = document.cookie.split(';').map(function (cookie){
+  console.log(cookie);
+})
